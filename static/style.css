@@ -1,0 +1,119 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Background image (LIGHT hotel image) */
+.background {
+    min-height: 100vh;
+    background-image: url("https://images.unsplash.com/photo-1501117716987-c8e1ecb21012");
+    background-size: cover;
+    background-position: center;
+}
+
+/* Light overlay for readability */
+.overlay {
+    min-height: 100vh;
+    background: rgba(255, 255, 255, 0.75); /* 👈 LIGHT overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+/* Card */
+.card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 30px 35px;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Title */
+.card h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 6px;
+    color: #1f2933;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input groups */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px; /* 👈 SPACE BETWEEN INPUTS */
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+input, select {
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+}
+
+/* Button */
+button {
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background: #2563eb;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1e40af;
+}
+
+/* Result */
+.result {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.result.risk {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.result.safe {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .card {
+        padding: 25px;
+    }
+}
