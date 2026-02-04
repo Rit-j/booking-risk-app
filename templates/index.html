@@ -4,55 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Booking Risk Predictor</title>
-    <link rel="stylesheet" href="/static/style.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="background">
-    <div class="overlay">
-        <div class="card">
+<div class="background-wrapper">
+    <div class="card">
+
+        <header class="card-header">
             <h1>Hotel Booking Risk</h1>
-            <p class="subtitle">AI-powered cancellation forecasting</p>
-            
+            <p>AI-powered cancellation prediction</p>
+        </header>
+
+        <div class="card-body">
+
+            {% if error %}
+            <div class="error-box">{{ error }}</div>
+            {% endif %}
+
+            <!-- FORM -->
             <form method="POST" action="/predict">
+
                 <div class="form-group">
-                    <label>Lead Time (days)</label>
+                    <label>LEAD TIME (DAYS)</label>
                     <input type="number" name="lead_time" placeholder="e.g. 45" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Average Daily Rate (ADR)</label>
-                    <input type="number" step="0.01" name="adr" placeholder="e.g. 120.00" required>
+                    <label>AVERAGE DAILY RATE (ADR)</label>
+                    <input type="number" step="0.01" name="adr" placeholder="e.g. 180.50" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Total Nights</label>
-                    <input type="number" name="total_nights" placeholder="e.g. 3" required>
+                    <label>TOTAL NIGHTS</label>
+                    <input type="number" name="total_nights" placeholder="e.g. 3" min="1" required>
                 </div>
 
-                <div class="form-row">
+                <div class="form-row inline">
                     <div class="form-group">
-                        <label>Repeat Guest</label>
+                        <label>REPEAT GUEST</label>
                         <select name="is_repeat">
-                            <option value="0">No</option>
+                            <option value="0" selected>No</option>
                             <option value="1">Yes</option>
                         </select>
                     </div>
+
                     <div class="form-group">
-                        <label>Special Requests</label>
-                        <input type="number" name="special_requests" min="0" value="0" required>
+                        <label>SPECIAL REQUESTS</label>
+                        <input type="number" name="special_requests" placeholder="e.g. 1" min="0" required>
                     </div>
                 </div>
 
-                <button type="submit">Analyze Risk</button>
+                <button type="submit" class="btn-analyze">
+                    Analyze Booking
+                </button>
             </form>
 
             {% if prediction %}
-            <div class="result {% if 'Low' in prediction %}safe{% else %}risk{% endif %}">
-                <h3>{{ prediction }}</h3>
-                <p>Cancellation Probability: <strong>{{ probability }}%</strong></p>
+            <div class="results-container">
+
+                <!-- SUMMARY CARD -->
+                <div class="summary-card {{ risk_class }}">
+                    <div class="status-dot"></div>
+                    <div>
+                        <h3>{{ prediction }}</h3>
+                        <p>Cancellation Probability: <strong>{{ probability }}%</strong></p>
+                    </div>
+                </div>
+
+                <!-- SPEEDOMETER -->
+                <div class="gauge-wrapper {{ risk_class }}">
+                    <svg viewBox="0 0 200 120" class="gauge">
+
+                        <!-- Background Arc -->
+                        <path
+                            d="M20 100 A80 80 0 0 1 180 100"
+                            fill="none"
+                            stroke="#e5e7eb"
+                            stroke-width="14"
+                            stroke-linecap="round"
+                        />
+
+                        <!-- Risk-colored Arc -->
+                        <path
+                            d="M20 100 A80 80 0 0 1 180 100"
+                            fill="none"
+                            class="gauge-arc"
+                            stroke-width="14"
+                            stroke-linecap="round"
+                        />
+
+                        <!-- Needle -->
+                        <line
+                            x1="100"
+                            y1="100"
+                            x2="100"
+                            y2="30"
+                            class="needle"
+                            style="transform: rotate({{ (probability * 1.8) - 90 }}deg);"
+                        />
+
+                        <!-- Needle Center -->
+                        <circle cx="100" cy="100" r="5" class="needle-center" />
+
+                    </svg>
+                </div>
+
+
             </div>
             {% endif %}
+
         </div>
     </div>
 </div>
